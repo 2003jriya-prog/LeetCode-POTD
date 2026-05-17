@@ -1,0 +1,31 @@
+1306. Jump Game III
+
+
+ bool canReach(vector<int>& arr, int start) {
+        int cnt=0;
+        int n=arr.size();
+        for(int i=0;i<n;i++){
+            if(arr[i]==0) cnt++;
+        }
+        if(cnt==0) return false;
+        queue<int> q;
+        vector<int> vis(n,0);
+        vis[start]=1;
+        q.push(start);
+        while(!q.empty()){
+            int x=q.front();
+            q.pop();
+            if(arr[x]==0) return true;
+            int left=x-arr[x];
+            if(left>=0 && vis[left]==0){
+                vis[left]=1;
+                q.push(left);
+            }
+            int right=x+arr[x];
+            if(right<n && vis[right]==0){
+                vis[right]=1;
+                q.push(right);
+            }
+        }
+        return false;
+    }
