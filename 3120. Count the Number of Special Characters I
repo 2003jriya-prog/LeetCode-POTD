@@ -1,0 +1,47 @@
+3120. Count the Number of Special Characters I
+
+int numberOfSpecialChars(string word) {
+        unordered_map<char,int> mp;
+        vector<int> v(26,0);
+        int ans=0;
+        for(auto it : word){
+             if(it>='A' && it<='Z'){
+                char ch=it-'A'+'a';
+                if(mp.find(ch)!=mp.end() && v[it-'A']==0){
+                  ans++;
+                   v[it-'A']=1;
+                }
+             }
+             else{
+                 char ch=it-'a'+'A';
+                if(mp.find(ch)!=mp.end() && v[it-'a']==0){
+                  ans++;
+                  v[it-'a']=1;
+                }
+             }
+             mp[it]++;
+        }
+        return ans;
+    }int numberOfSpecialChars(string word) {
+        unordered_map<char,int> mp;
+        vector<int> v(26,0);
+        int ans=0;
+        for(auto it : word){
+             if(it>='A' && it<='Z'){
+                char ch=it-'A'+'a';
+                if(mp.find(ch)!=mp.end() && v[it-'A']==0){
+                  ans++;
+                   v[it-'A']=1;
+                }
+             }
+             else{
+                 char ch=it-'a'+'A';
+                if(mp.find(ch)!=mp.end() && v[it-'a']==0){
+                  ans++;
+                  v[it-'a']=1;
+                }
+             }
+             mp[it]++;
+        }
+        return ans;
+    }
