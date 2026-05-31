@@ -1,0 +1,14 @@
+2126. Destroying Asteroids
+
+bool asteroidsDestroyed(int mass, vector<int>& asteroids) {
+        int n=asteroids.size();
+        long totalMass=mass;
+        sort(asteroids.begin(),asteroids.end());
+        for(int i=0;i<n;i++){
+            if(asteroids[i]>totalMass){
+                return false;
+            }
+            totalMass+=asteroids[i];
+        }
+        return true;
+    }
