@@ -1,0 +1,17 @@
+3633. Earliest Finish Time for Land and Water Rides I
+
+int ans=INT_MAX;
+    void solve(vector<int> &fs,vector<int> &fd,vector<int> &ss,vector<int> &sd){
+        int mini=INT_MAX;
+        for(int i=0;i<fs.size();i++){
+            mini=min(mini,fs[i]+fd[i]);
+        }
+        for(int i=0;i<ss.size();i++){
+            ans=min(ans,max(mini,ss[i])+sd[i]);
+        }
+    }
+    int earliestFinishTime(vector<int>& landStartTime, vector<int>& landDuration, vector<int>& waterStartTime, vector<int>& waterDuration) {
+        solve(landStartTime,landDuration,waterStartTime,waterDuration);
+        solve(waterStartTime,waterDuration,landStartTime,landDuration);
+        return ans;
+    }
