@@ -1,0 +1,23 @@
+2095. Delete the Middle Node of a Linked List
+
+
+
+ ListNode* deleteMiddle(ListNode* head) {
+        if(head==NULL || head->next==NULL) return NULL;
+        ListNode* temp=head;
+        int n=0;
+        while(temp){
+            n++;
+            temp=temp->next;
+        }
+        n=n/2;
+        int i=1;
+        ListNode* prev=head;
+        while(i!=n){
+            prev=prev->next;
+            i++;
+
+        }
+        prev->next=prev->next->next;
+        return head;
+    }
