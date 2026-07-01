@@ -1,0 +1,79 @@
+2812. Find the Safest Path in a Grid
+
+int xdir[4]={0,0,1,-1};
+    int ydir[4]={1,-1,0,0};
+    bool isValid(int i,int j,vector<vector<int>> &vis){
+        if(i<0 || j<0 || i>=vis.size() || j>=vis.size() || vis[i][j]) return false;
+        return true;
+    }
+    bool isSafe(vector<vector<int>> &distToThief,int safeDis){
+        int n=distToThief.size();
+        vector<vector<int>> vis(n,vector<int> (n,0));
+        queue<pair<int,int>> q;
+        if(distToThief[0][0]<safeDis) return false;
+        q.push({0,0});
+        vis[0][0]=1;
+        while(!q.empty()){
+            int size=q.size();
+            while(size-->0){
+                int curRow=q.front().first;
+                int curCol=q.front().second;
+                q.pop();
+                if(curRow==n-1 && curCol==n-1) return true;
+                for(int k=0;k<4;k++){
+                    int nxtRow=curRow+xdir[k];
+                    int nxtCol=curCol+ydir[k];
+                    if(!isValid(nxtRow,nxtCol,vis)) continue;
+                    if(distToThief[nxtRow][nxtCol]<safeDis) continue;
+                    q.push({nxtRow,nxtCol});
+                    vis[nxtRow][nxtCol]=1;
+                }
+            }
+        }
+        return false;
+    }
+    int maximumSafenessFactor(vector<vector<int>>& grid) {
+        int n=grid.size();
+        vector<vector<int>> vis(n,vector<int> (n,0));
+        vector<vector<int>> disToThief(n,vector<int> (n,-1));
+        queue<pair<int,int>> q;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]==1){
+                    q.push({i,j});
+                    vis[i][j]=1;
+                }
+            }
+        }
+        int len=0;
+        while(!q.empty()){
+            int size=q.size();
+            while(size-->0){
+                int curRow=q.front().first;
+                int curCol=q.front().second;
+                q.pop();
+                disToThief[curRow][curCol]=len;
+                for(int k=0;k<4;k++){
+                    int nxtRow=curRow+xdir[k];
+                    int nxtCol=curCol+ydir[k];
+                    if(!isValid(nxtRow,nxtCol,vis)) continue;
+                    vis[nxtRow][nxtCol]=1;
+                    q.push({nxtRow,nxtCol});
+                }
+            }
+            len++;
+        }
+        int ans=0;
+        int l=0,h=n;
+        while(l<=h){
+            int mid=(l+h)/2;
+            if(isSafe(disToThief,mid)){
+                ans=mid;
+                l=mid+1;
+            }
+            else{
+                h=mid-1;
+            }
+        }
+        return ans;
+    }
