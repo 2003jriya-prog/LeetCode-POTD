@@ -1,0 +1,22 @@
+2492. Minimum Score of a Path Between Two Cities
+
+ int ans=INT_MAX;
+    void dfs( vector<int> &vis,vector<vector<pair<int,int>>> &adj,int i){
+          vis[i]=1;
+          for(auto it : adj[i]){
+            ans=min(ans,it.second);
+            if(!vis[it.first]){
+               dfs(vis,adj,it.first);
+            }
+          }
+    }
+    int minScore(int n, vector<vector<int>>& roads) {
+        vector<int> vis(n+1,0);
+        vector<vector<pair<int,int>>> adj(n+1);
+        for(auto it : roads){
+            adj[it[0]].push_back({it[1],it[2]});
+            adj[it[1]].push_back({it[0],it[2]});
+        }
+        dfs(vis,adj,1);
+        return ans;
+    }
