@@ -1,0 +1,55 @@
+3532. Path Existence Queries in a Graph I
+
+class DSU{
+    vector<int> parent;
+    vector<int> rank;
+    public:
+    DSU(int n){
+        for(int i=0;i<n;i++){
+            parent.push_back(i);
+            rank.push_back(1);
+        }
+    }
+    int find(int x){
+        if(parent[x]==x) return x;
+        return parent[x]=find(parent[x]);
+    }
+    void unionn(int x,int y){
+        x=parent[x];
+        y=parent[y];
+        if(rank[x]>rank[y]){
+            parent[y]=x;
+        }
+        else if(rank[x]<rank[y]){
+            parent[x]=y;
+        }
+        else{
+            rank[x]++;
+            parent[y]=x;
+        }
+    }
+};
+class Solution {
+public:
+    vector<bool> pathExistenceQueries(int n, vector<int>& nums, int maxDiff, vector<vector<int>>& queries) {
+        priority_queue<pair<int,int>> pq;
+        for(int i=0;i<n;i++){
+            pq.push({nums[i],i});
+        }
+        DSU dsu(n);
+        pair<int,int> temp=pq.top();
+        while(!pq.empty()){
+            pair<int,int> curr=pq.top();
+            pq.pop();
+            if(abs(temp.first-curr.first)<=maxDiff){
+                dsu.unionn(temp.second,curr.second);
+            }
+            temp=curr;
+        }
+        vector<bool> ans;
+        for(auto &it : queries){
+            ans.push_back(dsu.find(it[0])==dsu.find(it[1]));
+        }
+        return ans;
+    }
+};
