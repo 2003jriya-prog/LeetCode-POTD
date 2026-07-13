@@ -1,0 +1,19 @@
+1291. Sequential Digits
+
+
+ vector<int> sequentialDigits(int low, int high) {
+        vector<int> ans;
+        string s="123456789";
+        string l=to_string(low);
+        string h=to_string(high);
+        for(int i=l.size();i<=h.size();i++){
+            for(int j=0;j<=9-i;j++){
+                string t=s.substr(j,i);
+                int x=stoi(t);
+                if(x>=low && x<=high){
+                    ans.push_back(x);
+                }
+            }
+        }
+        return ans;
+    }
