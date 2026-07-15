@@ -1,0 +1,16 @@
+3658. GCD of Odd and Even Sums
+
+
+ int gcdOfOddEvenSums(int n) {
+        int OddSum=0;
+        int EvenSum=0;
+         for(int i=1;i<=2*n;i++){
+             if(i%2){
+                 OddSum+=i;
+             }
+             else{
+                 EvenSum+=i;
+             }
+         }
+        return gcd(OddSum,EvenSum);
+    }
