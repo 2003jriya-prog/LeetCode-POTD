@@ -1,0 +1,26 @@
+3499. Maximize Active Section with Trade I
+
+
+class Solution {
+public:
+    int maxActiveSectionsAfterTrade(string s) {
+        int n=s.length();
+        int cntZero=count(s.begin(),s.end(),'1');
+        vector<int> zeroSize;
+        int i=0;
+        while(i<n){
+            int start=i;
+            while(i<n && s[i]==s[start]){
+                i++;
+            }
+            if(s[start]=='0') zeroSize.push_back(i-start);
+        }
+        int m=zeroSize.size();
+        if(m<0) return cntZero;
+        int MaxBlockSize=0;
+        for(int i=0;i<m-1;i++){
+         MaxBlockSize=max(MaxBlockSize,zeroSize[i]+zeroSize[i+1]);
+        }
+        return cntZero+MaxBlockSize;
+    }
+};
